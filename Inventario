@@ -56,8 +56,6 @@ def gestion_categorias(diccionario):
     else:
         print("Respuesta no valida")
 
-    print("Inventario")
-    ciclo(diccionario)
 
 while True:
     print("\n\n ------------------------------------------")
