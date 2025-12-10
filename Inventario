@@ -9,6 +9,43 @@ def ciclo(diccionario):
         for i, art in enumerate(arti, start=1):
             print(f"{i}. {art}")
 
+def eliminar_datos(diccionario):
+    print("\n----ELIMINAR DATOS ----")
+    print("Elige que quieres eliminar:")
+    print("1. Categoria Completa")
+    print("2. un Articulo especifico")
+    opcion_eliminar = input("opcion  (1 o 2): ").lower()
+
+    if opcion_eliminar == "1":
+        categoria_a_eliminar = input("Nombre de la categoria a eliminar: ").lower().strip()
+        if categoria_a_eliminar in diccionario:
+            confirmacion = input(f"¿estas seguro que deseas eliminar {categoria_a_eliminar.upper()}? (si/no): ").lower().strip()
+            if confirmacion == "si":
+                diccionario.pop(categoria_a_eliminar)
+                print(f"la categoria {categoria_a_eliminar} eliminada con exito")
+            else:
+                print("operacion cancelada")
+        else:
+            print("ERROR: categoria no encontrada.")
+
+    elif opcion_eliminar == "2":
+        categoria_padre = input("De que categoria deseas eliminar el articulo").lower().strip()
+
+        if categoria_padre in diccionario:
+            print(f"articulos actuales {categoria_padre.upper()}: {diccionario[categoria_padre]}")
+            articulo_a_eliminar = input("Escribe el nonbre del articulos a eliminar ").lower().strip()
+
+            try:
+                diccionario[categoria_padre].remove(articulo_a_eliminar)
+                print(f"articulo {articulo_a_eliminar} eliminado de {categoria_padre.upper()}. ")
+            except ValueError:
+                print(f"ERROR: El articulo {articulo_a_eliminar} no existe en esa categoria ")
+        else:
+            print("Error: Categoria no encontrada. ")
+
+    else:
+        print("opcion no valida. volviendo al menu principal. ")
+
 def gestion_categorias(diccionario):
     print("Deseas agregar una categoria?")
     respuesta = input().lower()
@@ -20,7 +57,7 @@ def gestion_categorias(diccionario):
             respuesta= input().lower()
 
             if respuesta == "si":
-                act_articulos = input("Escribe los articlos separandolos con una (,): ").lower()
+                act_articulos = input("Escribe los articulos separandolos con una (,): ").lower()
 
                 list_temporal = act_articulos.split(',')
 
@@ -62,16 +99,21 @@ while True:
     print(" *** MENU DE INVENTARIO *** ")
     print("1. Mostrar inventario")
     print("2. Agregar/Actualizar Categoria")
-    print("3. Salir del programa")
+    print("3. eliminar: Categorias/Articulos")
+    print("4. Salir del programa")
     print("\n\n ------------------------------------------")
-    opcion = input("Selecciona una opcion 1,2,o 3: ")
+    opcion = input("Selecciona una opcion 1,2,3 o 4: ")
 
     if opcion == "1":
         ciclo(diccionario)
-    if opcion == "2":
+    elif opcion == "2":
         gestion_categorias(diccionario)
+
     elif opcion == "3":
+        eliminar_datos(diccionario)
+
+    elif opcion == "4":
         print("Saliendo del programa")
         break
     else:
-        print("opcion invalida, eliga una de las siguientes: 1,2 o 3")
+        print("opcion invalida, eliga una de las siguientes: 1,2,3 o 4")
